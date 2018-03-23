@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="arsic.aleksa.chatapplication.MainActivity">
+
+
+
+    <LinearLayout
+        android:id="@+id/LinearLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <RelativeLayout
+            android:id="@+id/RelativeLeftLogin"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            >
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/RelativeCenterLogin"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.6"
+            >
+
+            <EditText
+                android:id="@+id/LoginUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:inputType="textVisiblePassword"
+                android:hint="@string/username"
+                />
+
+            <EditText
+                android:id="@+id/LoginPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/LoginUsername"
+                android:inputType="textPassword"
+                android:hint="@string/password"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/RelativeRightLogin"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            >
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LinearMainButton"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/LinearLogin"
+        android:layout_marginBottom="80dp"
+        android:orientation="horizontal"
+        >
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.10"
+            >
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.35"
+            >
+
+            <Button
+                android:id="@+id/LoginBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/btnLogin"
+                />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.10"
+            >
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.35"
+            >
+
+            <Button
+                android:id="@+id/RegisterBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/btnRegister"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.10"
+            >
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

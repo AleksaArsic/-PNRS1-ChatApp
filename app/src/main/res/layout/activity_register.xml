@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="arsic.aleksa.chatapplication.RegisterActivity"
+    android:id="@+id/RegisterRelativeLayout"
+    >
+
+    <LinearLayout
+        android:id="@+id/LinearRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <RelativeLayout
+            android:id="@+id/RelativeLeftRegister"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.05"
+            >
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/RelativeLeftDataReg"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.45"
+            >
+
+            <EditText
+                android:id="@+id/RegUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textVisiblePassword"
+                android:maxLines="1"
+                android:hint="@string/username"/>
+
+            <EditText
+                android:id="@+id/RegPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/RegUsername"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:hint="@string/password"
+                />
+
+            <EditText
+                android:id="@+id/RegEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/RegPassword"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:hint="@string/email"
+                />
+
+            <CheckBox
+                android:id="@+id/RegNotification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/RegEmail"
+                android:text="@string/accept_notification"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/RelativeCenterRegister"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.05"
+            >
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/RelativeRightDataReg"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.45"
+            >
+
+            <EditText
+                android:id="@+id/FirstNameReg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textVisiblePassword"
+                android:maxLines="1"
+                android:hint="@string/firstName"
+                />
+
+            <EditText
+                android:id="@+id/LastNameReg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/FirstNameReg"
+                android:inputType="textVisiblePassword"
+                android:maxLines="1"
+                android:hint="@string/lastName"
+                />
+
+            <LinearLayout
+                android:id="@+id/LinearGener"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/LastNameReg"
+                android:orientation="horizontal"
+                >
+                
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.25"
+                    >
+
+                    <TextView
+                        android:id="@+id/GenderTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Gender"
+                        />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.55"
+                    >
+
+                  <Spinner
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:spinnerMode="dropdown"
+                      android:entries="@array/spinnerItems"
+                      >
+                  </Spinner>
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/RelativeRightRegister"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.05"
+            >
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LinearCalendarReg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/LinearRegister"
+        >
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            >
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/RelativeCalendarReg"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.6"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/TextViewBirthDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:hint="Birth Date"
+                />
+
+            <Button
+                android:id="@+id/BirthDateRegBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Birth Date"
+                />
+
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            >
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LinearRegButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        >
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            >
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/RelativeRegButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4"
+            >
+
+            <Button
+                android:id="@+id/RegisterRegBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btnRegister"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            >
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>

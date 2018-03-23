@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Chat Application</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="email">ex@ample.com</string>
+    <string name="btnLogin">Login</string>
+    <string name="btnRegister">Register</string>
+    <string name="btnLogOut">Log Out</string>
+    <string name="accept_notification">Accept Notifications</string>
+    <string name="firstName">First Name</string>
+    <string name="lastName">Last Name</string>
+    <string name="msgText">Message text</string>
+    <string name="sendMsg">Send</string>
+    <string name="exitMsg">Press back button once again to exit application.</string>
+    <string name="emptyMsg">Message is empty.</string>
+    <string name="sentMsg">Message sent.</string>
+
+    <string name="errorMsgReg">Please enter valid data.</string>
+    <string name="errorMsgLogIn">Invalid username/password combination.</string>
+
+    <string-array name="spinnerItems">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Unspecified</item>
+    </string-array>
+
+    <string name="firstContact">First Contact ever!!!</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="ancientMaster">Welcome ancient master!</string>
+    <string name="youngMaster">Welcome young master!</string>
+
+</resources>
