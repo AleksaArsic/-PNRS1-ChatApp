@@ -6,15 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 public class ContactsActivity extends AppCompatActivity {
 
 
     private Button btnLogOut;
-    private TextView firstContact;
-
+    private ListView listViewContacts;
     private boolean backPressedOnce = false;
 
     /* Disable back button on Contacts Activity */
@@ -46,15 +45,14 @@ public class ContactsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_contacts);
 
         btnLogOut = findViewById(R.id.ContactsLogOutBtn);
-        firstContact = findViewById(R.id.FirstContact);
 
+        // List view items
+        listViewContacts = findViewById(R.id.ContactsListView);
+        ContactsAdapter contactsAdapter = new ContactsAdapter(this);
 
-        firstContact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchMessageActivity();
-            }
-        });
+        // Calling dummy function to add dummy data to custom adapter
+        addContactsToList(contactsAdapter);
+        listViewContacts.setAdapter(contactsAdapter);
 
         btnLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,5 +71,28 @@ public class ContactsActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+    }
+
+    /* Dummy function for adding dummy data to list view */
+
+    private void addContactsToList(ContactsAdapter contactsAdapter){
+        contactsAdapter.addContact(new ContactsRow("Aleksa Arsic",
+                getResources().getDrawable(R.drawable.send_button)));
+        contactsAdapter.addContact(new ContactsRow("Ivan Mitrovic",
+                getResources().getDrawable(R.drawable.send_button)));
+        contactsAdapter.addContact(new ContactsRow("Filip Mihic",
+                getResources().getDrawable(R.drawable.send_button)));
+        contactsAdapter.addContact(new ContactsRow("Savo Dragovic",
+                getResources().getDrawable(R.drawable.send_button)));
+        contactsAdapter.addContact(new ContactsRow("David Melegi",
+                getResources().getDrawable(R.drawable.send_button)));
+        contactsAdapter.addContact(new ContactsRow("Dusan Radjenovic",
+                getResources().getDrawable(R.drawable.send_button)));
+        contactsAdapter.addContact(new ContactsRow("Dejan Igic",
+                getResources().getDrawable(R.drawable.send_button)));
+        contactsAdapter.addContact(new ContactsRow("Ivona Juric",
+                getResources().getDrawable(R.drawable.send_button)));
+        contactsAdapter.addContact(new ContactsRow("Nikola Sujica",
+                getResources().getDrawable(R.drawable.send_button)));
     }
 }

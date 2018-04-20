@@ -7,12 +7,22 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MessageActivity extends AppCompatActivity {
 
     private Button btnLogOut, btnSend;
     private EditText Message;
+    private TextView textViewContactName;
+
+    private ListView listViewMessages;
+    private MessageAdapter messageAdapter = new MessageAdapter(this);
+
+    /* Variables for getting Contact Name from ContactsActivity */
+    private Bundle bundle = null;
+    private String contactName = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +32,16 @@ public class MessageActivity extends AppCompatActivity {
         btnLogOut = findViewById(R.id.MessageLogOutBtn);
         btnSend = findViewById(R.id.MessageSendBtn);
         Message = findViewById(R.id.MessageEditText);
+        textViewContactName = findViewById(R.id.MessageContactName);
+
+        listViewMessages = findViewById(R.id.MessageListView);
+        listViewMessages.setAdapter(messageAdapter);
+
+        /* Get contact name from ContactsActivity Bundle Extra */
+        bundle = getIntent().getExtras();
+        contactName = bundle.getString("ContactName");
+
+        textViewContactName.setText(contactName);
 
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -29,9 +49,10 @@ public class MessageActivity extends AppCompatActivity {
                 if(messageIsEmpty()){
                     Toast.makeText(getApplicationContext(), getString(R.string.emptyMsg), Toast.LENGTH_LONG).show();
                 }else{
-                    /*
-                        TO-DO: Add send button functionality
-                     */
+                    messageAdapter.addMessage(new MessageRow(Message.getText().toString()));
+
+                    listViewMessages.setSelection(listViewMessages.getAdapter().getCount() - 1);
+
                     Toast.makeText(getApplicationContext(), getString(R.string.sentMsg), Toast.LENGTH_LONG).show();
                     Message.setText(null);
                 }

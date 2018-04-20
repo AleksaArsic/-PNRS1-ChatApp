@@ -21,6 +21,15 @@
             android:layout_weight="0.7"
             >
 
+            <TextView
+                android:id="@+id/MessageContactName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                />
+
         </RelativeLayout>
 
         <RelativeLayout
@@ -46,7 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/LinearMessageHeader"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="50dp"
         android:orientation="horizontal"
         >
 
@@ -64,6 +73,13 @@
             android:layout_weight="0.9"
             android:orientation="vertical"
             >
+
+            <ListView
+                android:id="@+id/MessageListView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </ListView>
 
         </LinearLayout>
 

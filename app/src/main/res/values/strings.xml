@@ -14,6 +14,7 @@
     <string name="exitMsg">Press back button once again to exit application.</string>
     <string name="emptyMsg">Message is empty.</string>
     <string name="sentMsg">Message sent.</string>
+    <string name="ContactsHeader">My chat list</string>
 
     <string name="errorMsgReg">Please enter valid data.</string>
     <string name="errorMsgLogIn">Invalid username/password combination.</string>

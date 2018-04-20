@@ -20,6 +20,14 @@
             android:layout_weight="0.7"
             >
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/ContactsHeader"
+                android:gravity="center"
+                />
+
         </RelativeLayout>
 
         <RelativeLayout
@@ -60,19 +68,15 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.9"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             >
 
-            <TextView
-                android:id="@+id/FirstContact"
+            <ListView
+                android:id="@+id/ContactsListView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:drawableStart="@mipmap/ic_launcher_round"
-                android:drawablePadding="10dp"
-                android:textStyle="bold"
-                android:text="@string/firstContact"
-                />
+                android:layout_height="match_parent">
+
+            </ListView>
 
         </LinearLayout>
 
