@@ -20,14 +20,14 @@ import java.util.Random;
 public class ContactsAdapter extends BaseAdapter {
 
     private Context mContext;
-    private ArrayList<ContactsRow> mContacts;
+    private ArrayList<Contact> mContacts;
 
     public ContactsAdapter(Context context){
         mContext = context;
-        mContacts = new ArrayList<ContactsRow>();
+        mContacts = new ArrayList<Contact>();
     }
 
-    public void addContact(ContactsRow contactsRow){
+    public void addContact(Contact contactsRow){
         mContacts.add(contactsRow);
         notifyDataSetChanged();
     }
@@ -74,7 +74,7 @@ public class ContactsAdapter extends BaseAdapter {
             view.setTag(holder);
         }
 
-        final ContactsRow contactsRow = (ContactsRow) getItem(position);
+        final Contact contactsRow = (Contact) getItem(position);
         final ViewHolder viewHolder = (ViewHolder) view.getTag();
         viewHolder.contactsName.setText(contactsRow.contactName);
         viewHolder.firstLetter.setText(contactsRow.firstLetter);
@@ -92,6 +92,7 @@ public class ContactsAdapter extends BaseAdapter {
                 Intent intent = new Intent(mContext, MessageActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("ContactName", contactsRow.contactName.toString());
+                bundle.putInt("ContactID", contactsRow.getId());
                 intent.putExtras(bundle);
                 mContext.startActivity(intent);
             }
@@ -100,6 +101,7 @@ public class ContactsAdapter extends BaseAdapter {
         return view;
     }
 
+    /* Randomize background for List Views first letter Text Views */
     private void randomFirstLetterBackground(ViewHolder viewHolder){
 
         Random rand = new Random();
@@ -111,6 +113,7 @@ public class ContactsAdapter extends BaseAdapter {
         viewHolder.firstLetter.setBackgroundColor(Color.argb(alpha, red, green, blue));
     }
 
+    /* Predefined mod 8 backgrounds */
     private void BackgroundFirstLetter(ViewHolder viewHolder, int position){
         if(position%8 == 0){
             viewHolder.firstLetter.setBackgroundColor(Color.parseColor("#FF5733"));

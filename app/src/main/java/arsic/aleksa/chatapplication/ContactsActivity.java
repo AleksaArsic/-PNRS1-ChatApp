@@ -1,6 +1,9 @@
 package arsic.aleksa.chatapplication;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,10 +14,20 @@ import android.widget.Toast;
 
 public class ContactsActivity extends AppCompatActivity {
 
-
+    /* Layout representatives */
     private Button btnLogOut;
     private ListView listViewContacts;
+
+    /* Boolean for exiting on two times pressed back button */
     private boolean backPressedOnce = false;
+
+    /* Shared Preference to read logged user ID */
+    SharedPreferences sharedPref;
+    int userID = 0;
+
+    /* Database entries */
+    mDataBaseHelper dataBaseH;
+    Contact[] contacts;
 
     /* Disable back button on Contacts Activity */
     @Override
@@ -46,11 +59,12 @@ public class ContactsActivity extends AppCompatActivity {
 
         btnLogOut = findViewById(R.id.ContactsLogOutBtn);
 
-        // List view items
+        /* List view items */
         listViewContacts = findViewById(R.id.ContactsListView);
         ContactsAdapter contactsAdapter = new ContactsAdapter(this);
 
-        // Calling dummy function to add dummy data to custom adapter
+        dataBaseH = new mDataBaseHelper(this);
+        /* Calling method to add database data to custom adapter */
         addContactsToList(contactsAdapter);
         listViewContacts.setAdapter(contactsAdapter);
 
@@ -73,26 +87,21 @@ public class ContactsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /* Dummy function for adding dummy data to list view */
+    /* Method for adding database data to list view */
+    private void addContactsToList(ContactsAdapter contactsAdapter) {
 
-    private void addContactsToList(ContactsAdapter contactsAdapter){
-        contactsAdapter.addContact(new ContactsRow("Aleksa Arsic",
-                getResources().getDrawable(R.drawable.send_button)));
-        contactsAdapter.addContact(new ContactsRow("Ivan Mitrovic",
-                getResources().getDrawable(R.drawable.send_button)));
-        contactsAdapter.addContact(new ContactsRow("Filip Mihic",
-                getResources().getDrawable(R.drawable.send_button)));
-        contactsAdapter.addContact(new ContactsRow("Savo Dragovic",
-                getResources().getDrawable(R.drawable.send_button)));
-        contactsAdapter.addContact(new ContactsRow("David Melegi",
-                getResources().getDrawable(R.drawable.send_button)));
-        contactsAdapter.addContact(new ContactsRow("Dusan Radjenovic",
-                getResources().getDrawable(R.drawable.send_button)));
-        contactsAdapter.addContact(new ContactsRow("Dejan Igic",
-                getResources().getDrawable(R.drawable.send_button)));
-        contactsAdapter.addContact(new ContactsRow("Ivona Juric",
-                getResources().getDrawable(R.drawable.send_button)));
-        contactsAdapter.addContact(new ContactsRow("Nikola Sujica",
-                getResources().getDrawable(R.drawable.send_button)));
+        /* Shared Preference to read logged user ID */
+        sharedPref = getApplicationContext().getSharedPreferences("arsic.aleksa.chatapplication",
+                Context.MODE_PRIVATE);
+        userID = sharedPref.getInt(MainActivity.ID_SHARED_PREF_KEY, 0);
+        contacts = dataBaseH.readContacts();
+
+        for(int i = 0; i < contacts.length; i++){
+            if(userID == contacts[i].id) continue;
+            else{
+                contactsAdapter.addContact(new Contact(contacts[i].username, contacts[i].firstName,
+                        contacts[i].lastName, contacts[i].id, getDrawable(R.drawable.send_button)));
+            }
+        }
     }
 }

@@ -31,5 +31,8 @@
 
     <string name="ancientMaster">Welcome ancient master!</string>
     <string name="youngMaster">Welcome young master!</string>
+    <string name="username_exists">Username already exists.</string>
+    <string name="reg_successful">Registration successful.</string>
+    <string name="username_invalid">Invalid username.</string>
 
 </resources>
