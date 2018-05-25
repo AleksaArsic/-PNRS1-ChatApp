@@ -160,7 +160,8 @@ public class MessageActivity extends AppCompatActivity {
                                     @Override
                                     public void run() {
                                         if(success){
-                                            arsic.aleksa.chatapplication.Message message = new Message(Message.getText().toString(), parseUsernameFromSessionID(), contactName, 1, 0);
+                                            arsic.aleksa.chatapplication.Message message = new Message(Message.getText().toString(),
+                                                    parseUsernameFromSessionID(), contactName, 1, 0);
 
                                             messageAdapter.addMessage(message);
                                             listViewMessages.setSelection(listViewMessages.getAdapter().getCount() - 1);
