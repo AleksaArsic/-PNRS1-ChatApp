@@ -150,8 +150,6 @@ public class MessageAdapter extends BaseAdapter {
         SharedPreferences sharedPref = mContext.getSharedPreferences("arsic.aleksa.chatapplication", Context.MODE_PRIVATE);
         int senderID = sharedPref.getInt(MainActivity.ID_SHARED_PREF_KEY, 0);
 
-        Log.d("senderID", Integer.toString(senderID));
-
         if(senderID == id){
             viewHolder.message.setBackgroundColor(Color.WHITE);
             viewHolder.message.setGravity(Gravity.END);
