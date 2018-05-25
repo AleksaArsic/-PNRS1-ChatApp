@@ -44,6 +44,14 @@ public class Contact {
         firstLetter = contactName.substring(0, 1);
     }
 
+    public Contact(String username, Drawable drawable){
+        this.username = username;
+        contactName = username;
+        firstLetter = contactName.substring(0, 1);
+        this.sendBtn = drawable;
+    }
+
+
     public int getId() {
         return id;
     }

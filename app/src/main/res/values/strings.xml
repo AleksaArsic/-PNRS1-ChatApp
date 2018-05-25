@@ -33,6 +33,15 @@
     <string name="youngMaster">Welcome young master!</string>
     <string name="username_exists">Username already exists.</string>
     <string name="reg_successful">Registration successful.</string>
+    <string name="reg_failed">Registration failed.</string>
+    <string name="login_successful">Login successful.</string>
+    <string name="login_failed">Login failed.</string>
     <string name="username_invalid">Invalid username.</string>
+    <string name="logout_successful">Logged out.</string>
+    <string name="logout_failed">Logout failed.</string>
+    <string name="zero_contacts">No contacts to display</string>
+    <string name="message_failed">Message is not sent. Please try again.</string>
+    <string name="refresh_messages">Refreshing messages.</string>
+    <string name="refresh_contacts">Refreshing contacts list.</string>
 
 </resources>

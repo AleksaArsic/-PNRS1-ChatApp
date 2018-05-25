@@ -10,7 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.os.Handler;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -34,6 +39,11 @@ public class MessageAdapter extends BaseAdapter {
 
     public void removeMessage(int position){
         mMessage.remove(position);
+        notifyDataSetChanged();
+    }
+
+    public void clearAdapter(){
+        mMessage.clear();
         notifyDataSetChanged();
     }
 
@@ -88,7 +98,47 @@ public class MessageAdapter extends BaseAdapter {
         viewHolder.message.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                removeMessage(position);
+
+                final Handler handler = new Handler();
+                final Message message = mMessage.get(position);
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        try{
+                            SharedPreferences sharedPref = mContext.getSharedPreferences("aleksa.arsic.chatapplication", Context.MODE_PRIVATE);
+                            String sessionID = sharedPref.getString("sessionid", null );
+                            String username = sessionID.substring(0, sessionID.indexOf('-'));
+
+                            HttpHelper httpHelper = new HttpHelper();
+                            JSONObject jsonObject = new JSONObject();
+
+                            jsonObject.put("data", message.getMessage());
+                            jsonObject.put("receiver", message.getReceiver());
+                            jsonObject.put("sender", username);
+
+                            final boolean success = httpHelper.httpDelete(MainActivity.SERVER_URL + MainActivity.MESSAGE, jsonObject, sessionID);
+
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if(success){
+                                        removeMessage(position);
+                                    }
+                                }
+                            });
+
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }catch (IOException e){
+                            e.printStackTrace();
+                        }
+
+                    }
+                }).start();
+
+
                 return true;
             }
         });
@@ -99,6 +149,8 @@ public class MessageAdapter extends BaseAdapter {
     private void setGravitySetBackground(ViewHolder viewHolder, int id){
         SharedPreferences sharedPref = mContext.getSharedPreferences("arsic.aleksa.chatapplication", Context.MODE_PRIVATE);
         int senderID = sharedPref.getInt(MainActivity.ID_SHARED_PREF_KEY, 0);
+
+        Log.d("senderID", Integer.toString(senderID));
 
         if(senderID == id){
             viewHolder.message.setBackgroundColor(Color.WHITE);

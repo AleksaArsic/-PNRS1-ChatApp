@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
@@ -17,6 +18,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.sql.SQLData;
 import java.util.Calendar;
 
@@ -35,6 +40,9 @@ public  class RegisterActivity extends AppCompatActivity {
 
     /* DatabaseHelper initialization */
     private mDataBaseHelper mDataBaseH;
+
+    private HttpHelper httpHelper;
+    private Handler handler;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +66,11 @@ public  class RegisterActivity extends AppCompatActivity {
         mMonth = c.get(Calendar.MONTH);
         mDay = c.get(Calendar.DAY_OF_MONTH);
 
+        /* Used for hanndling UI components in seperate thread */
+        handler = new Handler();
+
+        /* HTTP helper class */
+        httpHelper = new HttpHelper();
 
         btnBirthDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,9 +90,9 @@ public  class RegisterActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 if(year < 1970){
-                    Toast.makeText(getApplicationContext(), getString(R.string.ancientMaster), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.ancientMaster), Toast.LENGTH_SHORT).show();
                 }else if(year  > 2010){
-                    Toast.makeText(getApplicationContext(), getString(R.string.youngMaster), Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.youngMaster), Toast.LENGTH_SHORT).show();
                 }
 
                 String date = dayOfMonth + "/" + (month + 1) + "/" + year;
@@ -96,7 +109,9 @@ public  class RegisterActivity extends AppCompatActivity {
                     email.setHint(Html.fromHtml (getString(R.string.email)+ " <font color=\"#ff0000\">" + "* " + "</font>"));
                     Toast.makeText(getApplicationContext(), getString(R.string.errorMsgReg), Toast.LENGTH_LONG).show();
                 }else{
+                    /* Database handling */
                     /* Check if user exists in database */
+                    /*
                     if(uniqueUsername(username.getText().toString())) {
                         mDataBaseH.insertContact(new Contact(username.getText().toString(),
                                 firstName.getText().toString(),
@@ -108,6 +123,40 @@ public  class RegisterActivity extends AppCompatActivity {
                         username.setHint(Html.fromHtml (getString(R.string.username) + " <font color=\"#ff0000\">" + "* " + "</font>"));
                         Toast.makeText(getApplicationContext(), getString(R.string.username_exists), Toast.LENGTH_SHORT).show();
                     }
+                    */
+
+                    /* HTTP Server POST username, password and email for register */
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            JSONObject jsonObject = new JSONObject();
+
+                            try{
+                                jsonObject.put("username", username.getText().toString());
+                                jsonObject.put("password", password.getText().toString());
+                                jsonObject.put("email", email.getText().toString());
+
+                                final boolean success = httpHelper.postJsonObject(MainActivity.SERVER_URL + MainActivity.REGISTRATION, jsonObject);
+
+                                handler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if(success) {
+                                            Toast.makeText(RegisterActivity.this, R.string.reg_successful, Toast.LENGTH_SHORT).show();
+
+                                            launchLoginActivity();
+                                        }else{
+                                            Toast.makeText(RegisterActivity.this, R.string.reg_failed, Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                            }catch (JSONException e){
+                                e.printStackTrace();
+                            }catch (IOException e){
+                                e.printStackTrace();
+                            }
+                        }
+                    }).start();
                 }
             }
         });

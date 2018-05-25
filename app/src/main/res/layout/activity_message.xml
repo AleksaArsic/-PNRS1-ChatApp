@@ -17,8 +17,27 @@
 
         <RelativeLayout
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            >
+
+            <ImageButton
+                android:id="@+id/RefreshMessages"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/refresh_button"
+                android:layout_centerInParent="true"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_marginTop="10dp"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.7"
+            android:layout_weight="0.6"
             >
 
             <TextView
@@ -120,6 +139,7 @@
                 android:id="@+id/MessageEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                
                 android:hint="@string/msgText"
                 />
         </RelativeLayout>

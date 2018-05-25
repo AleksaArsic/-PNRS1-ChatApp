@@ -37,6 +37,11 @@ public class ContactsAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    public void clearAdapter(){
+        mContacts.clear();
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getCount(){
         return mContacts.size();

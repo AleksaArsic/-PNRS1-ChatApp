@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
@@ -14,10 +15,27 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
 
     /* Shared Preference id key*/
     public static final String ID_SHARED_PREF_KEY = "contact_id";
+    public static final String SESSION_ID = "sessionid";
+
+    /* HTTP Server information */
+    public static final String SERVER_URL = "http://10.0.2.2:3000";
+    public static final String REGISTRATION = "/register";
+    public static final String LOGIN = "/login";
+    public static final String LOGOUT = "/logout";
+    public static final String CONTACTS = "/contacts";
+    public static final String MESSAGE = "/message";
+
+    private Handler handler;
+    private HttpHelper httpHelper;
 
     /* Layout representatives */
     private Button btnLogIn, btnRegister;
@@ -41,6 +59,12 @@ public class MainActivity extends AppCompatActivity {
         username = findViewById(R.id.LoginUsername);
         password = findViewById(R.id.LoginPassword);
 
+        /* Used for handling UI components in seperate thread */
+        handler = new Handler();
+
+        /* HTTP helper class */
+        httpHelper = new HttpHelper();
+
         btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,10 +73,12 @@ public class MainActivity extends AppCompatActivity {
                     password.setHint(Html.fromHtml(getString(R.string.password) + " <font color=\"#ff0000\">" + "* " + "</font>"));
                     Toast.makeText(getApplicationContext(), getString(R.string.errorMsgLogIn), Toast.LENGTH_LONG).show();
                 }else {
+                    /* Database handling */
+                    /*
                     if (userExists(username.getText().toString())) {
                         contact = mDataBaseH.readContact(username.getText().toString());
 
-                        /* Put logged user ID to Shared Preferences */
+                        // Put logged user ID to Shared Preferences
                         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("arsic.aleksa.chatapplication",
                                 Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPref.edit();
@@ -65,6 +91,58 @@ public class MainActivity extends AppCompatActivity {
                         username.setHint(Html.fromHtml(getString(R.string.username) + " <font color=\"#ff0000\">" + "* " + "</font>"));
                         Toast.makeText(getApplicationContext(), getString(R.string.username_invalid), Toast.LENGTH_SHORT).show();
                     }
+
+                    */
+
+                    // Put logged user ID to Shared Preferences
+                    SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("arsic.aleksa.chatapplication",
+                            Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putInt(ID_SHARED_PREF_KEY, 1);
+                    editor.apply();
+
+                    /* HTTP server POST username, password for login */
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            JSONObject jsonObject = new JSONObject();
+
+                            try{
+                                jsonObject.put("username", username.getText().toString());
+                                jsonObject.put("password", password.getText().toString());
+
+                                final boolean success = httpHelper.postJsonObject(SERVER_URL + LOGIN, jsonObject);
+
+                                final String responseMessage = httpHelper.responseMessage;
+
+                                handler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if(success){
+                                            Toast.makeText(MainActivity.this, R.string.login_successful, Toast.LENGTH_SHORT).show();
+
+                                            SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("aleksa.arsic.chatapplication",
+                                                    Context.MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = sharedPref.edit();
+                                            editor.putString(SESSION_ID, httpHelper.sessionId);
+                                            editor.apply();
+
+                                            launchContactsActivity();
+                                        }
+                                        else{
+                                            Toast.makeText(MainActivity.this, responseMessage, Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+
+                            }catch (JSONException e){
+                                e.printStackTrace();
+                            }catch (IOException e){
+                                e.printStackTrace();
+                            }
+                        }
+                    }).start();
+
                 }
             }
         });
@@ -124,4 +202,5 @@ public class MainActivity extends AppCompatActivity {
         if((username.length() < 3) || (password.length() < 6)) return false;
         else return true;
     }
+
 }
