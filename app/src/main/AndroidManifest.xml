@@ -32,6 +32,14 @@
             >
 
         </activity>
+
+        <!-- Exported in means that the service can be used by other applications -->
+        <service
+            android:name=".BindService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
+
     </application>
 
 </manifest>

@@ -44,4 +44,8 @@
     <string name="refresh_messages">Refreshing messages.</string>
     <string name="refresh_contacts">Refreshing contacts list.</string>
 
+    <string name="notification_text">Hey! We miss you and your friends miss you.
+                                     You have new message(s)</string>
+    <string name="notification_new_message_title">ChatApp New Message(s)</string>
+
 </resources>

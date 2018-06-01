@@ -1,11 +1,15 @@
 package arsic.aleksa.chatapplication;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
+import android.os.IBinder;
+import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
@@ -27,12 +31,13 @@ public class MainActivity extends AppCompatActivity {
     public static final String SESSION_ID = "sessionid";
 
     /* HTTP Server information */
-    public static final String SERVER_URL = "http://10.0.2.2:3000";
+    public static final String SERVER_URL = "http://18.205.194.168:80";
     public static final String REGISTRATION = "/register";
     public static final String LOGIN = "/login";
     public static final String LOGOUT = "/logout";
     public static final String CONTACTS = "/contacts";
     public static final String MESSAGE = "/message";
+    public static final String FROMSERVICE = "/getfromservice";
 
     private Handler handler;
     private HttpHelper httpHelper;
@@ -64,6 +69,9 @@ public class MainActivity extends AppCompatActivity {
 
         /* HTTP helper class */
         httpHelper = new HttpHelper();
+
+
+
 
         btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override

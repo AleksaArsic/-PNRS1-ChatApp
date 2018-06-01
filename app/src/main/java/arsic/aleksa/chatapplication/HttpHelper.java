@@ -156,6 +156,61 @@ public class HttpHelper {
         else return null;
     }
 
+
+    /* HTTP get Boolean if there is a new messages for the logged user */
+    public boolean getNewMessageBooleanFromURLService(String urlString, String sessionId) throws IOException, JSONException{
+        HttpURLConnection httpURLConnection = null;
+        java.net.URL url = new URL(urlString);
+        httpURLConnection = (HttpURLConnection) url.openConnection();
+
+        httpURLConnection.setRequestMethod("GET");
+        httpURLConnection.setRequestProperty("Accept", "application/json");
+        httpURLConnection.addRequestProperty("sessionid", sessionId);
+        httpURLConnection.setReadTimeout(10000);
+        httpURLConnection.setConnectTimeout(15000);
+
+        try{
+            httpURLConnection.connect();
+        }catch (IOException e ){
+            return false;
+        }
+
+        int responseCode = httpURLConnection.getResponseCode();
+        responseMessage = httpURLConnection.getResponseMessage();
+        Log.d("STATUS: ", Integer.toString(responseCode));
+        Log.d("MESSAGE: ", responseMessage);
+        Log.d("sessionID: ", sessionId);
+
+        /* BufferedReader reads text from character input stream  */
+        /* getInputStream reads input stream from opened connection */
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+        StringBuilder stringBuilder = new StringBuilder();
+        String line;
+
+        /* Reads line of text from bufferedReader and appends it to the stringBuilder */
+        while((line = bufferedReader.readLine()) != null){
+            stringBuilder.append(line);
+        }
+
+        bufferedReader.close();
+
+        /* Make string from stringBuilder */
+        String responseString = stringBuilder.toString();
+        /* Parse Boolean */
+        Boolean response = Boolean.parseBoolean(responseString);
+
+        responseCode = httpURLConnection.getResponseCode();
+        responseMessage = httpURLConnection.getResponseMessage();
+        Log.d("STATUS: ", Integer.toString(responseCode));
+        Log.d("MESSAGE: ", Integer.toString(httpURLConnection.getResponseCode()));
+
+        httpURLConnection.disconnect();
+
+        /* Return new JSONArray from jsonString if responseCode == SUCCESS */
+        if(responseCode == SUCCESS) return response /*new JSONArray(jsonString)*/ ;
+        else return false;
+    }
+
     /*HTTP delete*/
     public boolean httpDelete(String urlString, JSONObject jsonObject, String sessionId) throws IOException, JSONException {
         HttpURLConnection urlConnection = null;
