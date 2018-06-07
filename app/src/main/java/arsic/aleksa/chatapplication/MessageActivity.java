@@ -149,8 +149,15 @@ public class MessageActivity extends AppCompatActivity {
 
                             /* JSONException is thrown when to indicate a JSON API problem */
                             try {
+
+                                /* Encrypt message with NDK */
+                                MyNDK myNDK = new MyNDK();
+                                String message = myNDK.encryptDecryptMessage(Message.getText().toString());
+
+                                Log.d("send: ", message);
+
                                 jsonObject.put("receiver", contactName);
-                                jsonObject.put("data", Message.getText().toString());
+                                jsonObject.put("data", message);
 
                                 final boolean success = httpHelper.postJsonObjectWithSessionID(MainActivity.SERVER_URL + MainActivity.MESSAGE,
                                         jsonObject, sessionID);
@@ -255,6 +262,16 @@ public class MessageActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 for(int i = 0; i < messages.length; i++){
+
+                                    /* Decrypt message with NDK */
+                                    MyNDK myNDK = new MyNDK();
+                                    Log.d("before: ", messages[i].message);
+
+                                    String message = myNDK.encryptDecryptMessage(messages[i].message);
+
+                                    messages[i].setMessage(message);
+                                    Log.d("after: ", messages[i].message);
+
                                     messageAdapter.addMessage(messages[i]);
                                     listViewMessages.setAdapter(messageAdapter);
                                 }
