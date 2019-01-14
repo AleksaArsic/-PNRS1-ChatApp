@@ -81,8 +81,7 @@ public class mDataBaseHelper extends SQLiteOpenHelper {
 
     public Contact[] readContacts(){
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query(CONTACTS_TABLE_NAME, null, null, null,
-                null, null, null);
+        Cursor cursor = db.query(CONTACTS_TABLE_NAME, null, null, null, null, null, null);
 
         if(cursor.getCount() <= 0) return null;
 
