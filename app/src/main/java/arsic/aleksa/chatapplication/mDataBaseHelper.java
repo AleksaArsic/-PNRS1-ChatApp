@@ -9,7 +9,7 @@ import android.provider.ContactsContract;
 import android.renderscript.ScriptIntrinsicYuvToRGB;
 
 /**
- * Created by Cisra on 4/20/2018.
+ * Created by Cisra on 4/20/2018..
  */
 
 public class mDataBaseHelper extends SQLiteOpenHelper {
